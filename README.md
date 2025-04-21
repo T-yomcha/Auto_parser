@@ -2,7 +2,7 @@
 
 Используемый стэк:
 1. Парсинг: Selenium, BeautifulSoup
-2. Обработка данных: Pandas
-3. База данных: PostgreSQL
-4. Аркестратор: Prefect (в процессе)
+2. Обработка данных: Pandas, Regex
+3. База данных: PostgreSQL, SQLAlchemy
+4. Аркестратор ETL: Prefect (в процессе)
 5. Веб-страница: (в процессе)
