@@ -1,5 +1,4 @@
 from prefect import flow, task
-import pandas as pd
 from autoru.autoru_links import collect_autoru_links
 from autoru.autoru_data import parse_autoru_data
 from autoru.autoru_transform import transform_autoru_data

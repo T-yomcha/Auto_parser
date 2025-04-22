@@ -1,0 +1,5 @@
+name: etl-autoru-deployment
+flow_name: etl-flow
+schedule: "0 7 * * *"
+work_pool:
+  name: default-agent-pool

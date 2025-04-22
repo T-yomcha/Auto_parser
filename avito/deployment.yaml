@@ -1,0 +1,5 @@
+name: etl-avito-deployment
+flow_name: etl-flow
+schedule: "0 10 * * *"
+work_pool:
+  name: default-agent-pool
