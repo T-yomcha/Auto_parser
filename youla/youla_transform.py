@@ -1,7 +1,6 @@
 import pandas as pd
 from datetime import datetime
 
-youla_df = pd.read_json('youla_data.json')
 
 def extract_car_info(title):
     parts = title.split()
@@ -23,8 +22,9 @@ def extract_engine_type(fuel):
         return 'дизель'
 
 def extract_engine_volume(engine_volume):
-    if engine_volume.isalpha():
-        return (engine_volume[:-2])
+    has_digit = any(char.isdigit() for char in engine_volume)
+    if has_digit:
+        return float(engine_volume[:-2])
     return None
 
 def extract_transmission(transmission):
@@ -48,42 +48,34 @@ def extract_publication(publication_date):
         return None
     return datetime.now().strftime('%d-%m-%Y')
 
-youla_df['title'] = youla_df['title'].replace('Не указано', None)
-youla_df.dropna(subset=['title'], inplace=True)
-youla_df[['brand', 'model', 'year']] = youla_df['title'].apply(extract_car_info).apply(pd.Series)
-youla_df['price'] = youla_df['price'].apply(extract_price).apply(pd.Series).astype(int)
-youla_df['engine_type'] = youla_df['fuel'].apply(extract_engine_type).apply(pd.Series)
-youla_df['engine_volume'] = youla_df['engine_volume'].apply(extract_engine_volume)
-youla_df['transmission'] = youla_df['transmission'].apply(extract_transmission).apply(pd.Series)
-youla_df['mileage'] = youla_df['mileage'].replace('Не указано', None)
-youla_df.dropna(subset=['mileage'], inplace=True)
-youla_df['mileage'] = youla_df['mileage'].apply(lambda x: x[:-2]).apply(pd.Series).astype(int)
-youla_df['location'] = youla_df['location'].apply(lambda x: 'москва').apply(pd.Series)
-youla_df['publication_date'] = youla_df['publication_date'].apply(extract_publication).apply(pd.Series)
-youla_df['publication_date'] = pd.to_datetime(youla_df['publication_date'], format='%d-%m-%Y', errors='coerce')
-youla_df = youla_df.drop(columns=['title', 'power', 'fuel'])
-youla_df.columns = youla_df.columns.str.lower()
-for col in youla_df.columns:
-    if col != 'link':
-        youla_df[col] = youla_df[col].apply(lambda x: x.lower() if isinstance(x, str) else x)
+def transform_youla_data():
+    youla_df = pd.read_json('youla_data.json')
 
+    youla_df['title'] = youla_df['title'].replace('Не указано', None)
+    youla_df.dropna(subset=['title'], inplace=True)
+    youla_df[['brand', 'model', 'year']] = youla_df['title'].apply(extract_car_info).apply(pd.Series)
+    youla_df['price'] = youla_df['price'].apply(extract_price).apply(pd.Series).astype(int)
+    youla_df['engine_type'] = youla_df['fuel'].apply(extract_engine_type).apply(pd.Series)
+    youla_df['engine_volume'] = youla_df['engine_volume'].apply(extract_engine_volume)
+    youla_df['transmission'] = youla_df['transmission'].apply(extract_transmission).apply(pd.Series)
+    youla_df['mileage'] = youla_df['mileage'].replace('Не указано', None)
+    youla_df.dropna(subset=['mileage'], inplace=True)
+    youla_df['mileage'] = youla_df['mileage'].apply(lambda x: x[:-2]).apply(pd.Series).astype(int)
+    youla_df['location'] = youla_df['location'].apply(lambda x: 'москва').apply(pd.Series)
+    youla_df['publication_date'] = youla_df['publication_date'].apply(extract_publication).apply(pd.Series)
+    youla_df['publication_date'] = pd.to_datetime(youla_df['publication_date'], format='%d-%m-%Y', errors='coerce')
+    youla_df = youla_df.drop(columns=['title', 'power', 'fuel'])
+    youla_df.columns = youla_df.columns.str.lower()
+    for col in youla_df.columns:
+        if col != 'link':
+            youla_df[col] = youla_df[col].apply(lambda x: x.lower() if isinstance(x, str) else x)
 
-#print(youla_df[['brand', 'model', 'year', 'price', 'engine_type']])
-#print(youla_df[['engine_volume', 'transmission', 'mileage', 'body_type', 'drive_type']])
-#print(youla_df[['location', 'publication_date']])
+    # print(youla_df[['brand', 'model', 'year', 'price', 'engine_type']])
+    #print(youla_df[['engine_volume', 'transmission', 'mileage', 'body_type', 'drive_type']])
+    # print(youla_df[['location', 'publication_date']])
 
-#print(youla_df.dtypes)
+    # print(youla_df.dtypes)
+    return youla_df
 
-
-
-from load_to_database import migrate_data_postgresql
-
-migrate_data_postgresql(
-    user="postgres",
-    password="root",
-    host="localhost",
-    port="5432",
-    database="parser",
-    df=youla_df,
-    table_name="youla"
-)
+if __name__ == '__main__':
+    transform_youla_data()
