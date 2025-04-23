@@ -25,7 +25,7 @@ def collect_drom_links():
 
     all_ad_links = []
 
-    num_pages = 1
+    num_pages = 2
 
     driver.get(url)
 

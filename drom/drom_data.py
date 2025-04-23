@@ -113,7 +113,7 @@ def parse_drom_data():
             })
 
         except Exception as e:
-            print(f"Ошибка при обработке {link}: {e}")
+            print(f"Error {link}: {e}")
             continue
 
     driver.quit()

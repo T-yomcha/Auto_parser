@@ -19,7 +19,7 @@ def collect_avito_links():
     base_url = "https://www.avito.ru/all/avtomobili/s_probegom-ASgBAgICAUSGFMjmAQ?p="
     links_set = set()
 
-    num_pages = 1
+    num_pages = 2
 
     for page in range(1, num_pages + 1):
         url = base_url + str(page)
