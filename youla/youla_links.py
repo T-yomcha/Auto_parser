@@ -21,7 +21,7 @@ def collect_youla_links():
 
     links = set()
 
-    while len(links) < 100:
+    while len(links) < 200:
         driver.execute_script(f"window.scrollTo(0, {screen_height * i});")
         i += 1
         time.sleep(scroll_pause_time)
@@ -31,7 +31,7 @@ def collect_youla_links():
             href = elem.get_attribute("href")
             if href:
                 links.add(href)
-            if len(links) >= 200:
+            if len(links) >= 300:
                 break
 
     with open("youla_links.json", "w") as f:
