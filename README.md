@@ -4,5 +4,5 @@
 1. Парсинг: Selenium, BeautifulSoup
 2. Обработка данных: Pandas, Regex
 3. База данных: PostgreSQL, SQLAlchemy
-4. Аркестратор ETL: Prefect (в процессе)
+4. Оркестратор ETL: Prefect
 5. Веб-страница: (в процессе)
