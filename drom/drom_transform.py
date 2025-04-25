@@ -2,6 +2,52 @@ import pandas as pd
 
 
 def transform_drom_data():
+    """Преобразует и очищает данные об автомобилях из файла json.
+
+    Функция выполняет следующие преобразования:
+    - Извлекает марку, модель и год из названия автомобиля
+    - Преобразует цену в числовой формат
+    - Разбирает характеристики двигателя на отдельные компоненты
+    - Нормализует типы кузова, привода и коробки передач
+    - Преобразует дату публикации в формат datetime
+    - Удаляет некорректные записи
+    - Приводит все строковые значения к нижнему регистру
+    - Преобразует пробег в числовой формат
+    - Удаляет ненужные столбцы
+
+    Args:
+        Нет параметров (работает с файлом json)
+
+    Returns:
+        pandas.DataFrame: Очищенный DataFrame с автомобилями, содержащий столбцы:
+            - brand (str): Марка автомобиля
+            - model (str): Модель автомобиля
+            - year (int): Год выпуска
+            - price (int): Цена в рублях
+            - engine_volume (float): Объем двигателя
+            - engine_type (str): Тип двигателя
+            - body_type (str): Тип кузова
+            - drive_type (str): Тип привода
+            - transmission (str): Тип коробки передач
+            - mileage (int): Пробег в км
+            - location (str): Местоположение
+            - publication_date (datetime): Дата публикации
+            - description (str): Описание
+            - link (str): Ссылка на объявление
+
+    Raises:
+        FileNotFoundError: Если файл autoru_data.json не найден
+        JSONDecodeError: Если файл содержит некорректный JSON
+        KeyError: Если в данных отсутствуют ожидаемые столбцы
+
+    Examples:
+        >>> df = transform_drom_data()
+        >>> print(df.columns)
+        Index(['brand', 'model', 'year', 'price', 'engine_volume', 'engine_type',
+               'body_type', 'drive_type', 'transmission', 'mileage', 'location',
+               'publication_date', 'description', 'link'],
+              dtype='object')
+    """
     def extract_car_info(title):
         parts = title.split(' ')
         brand = parts[1]

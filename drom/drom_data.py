@@ -8,6 +8,46 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 def parse_drom_data():
+    """Парсит детальную информацию об автомобилях с сайта по сохраненным ссылкам.
+
+    Функция загружает список ссылок из файла json, последовательно посещает
+    каждую страницу с объявлением и извлекает следующие данные:
+    - Название автомобиля
+    - Цену
+    - Описание
+    - Тип двигателя
+    - Тип кузова
+    - Тип привода
+    - Коробку передач
+    - Пробег
+    - Местоположение
+    - Дату публикации
+    - Ссылку на объявление
+
+    Args:
+        Нет аргументов.
+
+    Returns:
+        None: Функция не возвращает значений, но сохраняет результаты в файл.
+
+    Raises:
+        FileNotFoundError: Если файл json не найден.
+        JSONDecodeError: Если файл json содержит некорректный JSON.
+        WebDriverException: При ошибках работы Selenium WebDriver.
+        Exception: Другие возможные исключения при парсинге.
+
+    Notes:
+        - Использует headless-режим браузера Chrome.
+        - Добавляет задержки между запросами для имитации человеческого поведения.
+        - Обрабатывает случаи отсутствия данных, заменяя их на "Не указано".
+        - Сохраняет данные в формате JSON с сохранением кириллических символов.
+
+    Examples:
+        >>> parse_drom_data()
+        Обработка: https://auto.ru/cars/used/sale/.../
+        Обработка: https://auto.ru/cars/used/sale/.../
+        Данные сохранены в json
+    """
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--ignore-certificate-errors")
