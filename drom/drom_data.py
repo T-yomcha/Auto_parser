@@ -162,3 +162,5 @@ def parse_drom_data():
         json.dump(cars_data, f, ensure_ascii=False, indent=4)
 
     print("Данные сохранены в drom_data.json")
+
+parse_drom_data()

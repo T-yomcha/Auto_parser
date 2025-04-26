@@ -90,3 +90,5 @@ def collect_drom_links():
         json.dump(all_ad_links, f, ensure_ascii=False, indent=4)
 
     print(f"Собрано {len(all_ad_links)} ссылок на объявления.")
+
+collect_drom_links()

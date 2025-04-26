@@ -41,8 +41,6 @@ def transform_drom_data():
         KeyError: Если в данных отсутствуют ожидаемые столбцы
 
     Examples:
-        >>> df = transform_drom_data()
-        >>> print(df.columns)
         Index(['brand', 'model', 'year', 'price', 'engine_volume', 'engine_type',
                'body_type', 'drive_type', 'transmission', 'mileage', 'location',
                'publication_date', 'description', 'link'],
@@ -58,6 +56,8 @@ def transform_drom_data():
         return brand, model, int(year)
 
     def extract_engine(engine):
+        if engine == "электро":
+            return engine, 0.0
         parts = engine.replace(" ", "").split(',')
         engine_type = parts[0]
         engine_volume = parts[1][:-1]
@@ -113,3 +113,5 @@ def transform_drom_data():
 
     # print(drom_df.dtypes)
     return drom_df
+
+transform_drom_data()
