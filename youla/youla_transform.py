@@ -88,8 +88,6 @@ def transform_youla_data():
         KeyError: Если в данных отсутствуют ожидаемые столбцы
 
     Examples:
-        >>> df = transform_youla_data()
-        >>> print(df.columns)
         Index(['brand', 'model', 'year', 'price', 'engine_volume', 'engine_type',
                'body_type', 'drive_type', 'transmission', 'mileage', 'location',
                'publication_date', 'description', 'link'],
@@ -116,7 +114,7 @@ def transform_youla_data():
         if col != 'link':
             youla_df[col] = youla_df[col].apply(lambda x: x.lower() if isinstance(x, str) else x)
 
-    # print(youla_df[['brand', 'model', 'year', 'price', 'engine_type']])
+    print(youla_df[['brand', 'model', 'year', 'price', 'engine_type']])
     #print(youla_df[['engine_volume', 'transmission', 'mileage', 'body_type', 'drive_type']])
     # print(youla_df[['location', 'publication_date']])
 

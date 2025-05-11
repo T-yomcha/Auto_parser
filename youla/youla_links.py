@@ -28,7 +28,6 @@ def collect_youla_links():
         - Включает задержки для имитации человеческого поведения.
 
     Examples:
-        >>> collect_youla_links()
         Обработка страницы 1...
         Страница 1: Найдено объявлений: 25
         Обработка страницы 2...
@@ -51,10 +50,11 @@ def collect_youla_links():
 
     links = set()
 
-    while len(links) < 200:
+    while len(links) < 300:
         driver.execute_script(f"window.scrollTo(0, {screen_height * i});")
         i += 1
         time.sleep(scroll_pause_time)
+        time.sleep(1)
 
         elements = driver.find_elements(By.CSS_SELECTOR, "a[href*='/moskva/auto/']")
         for elem in elements:
@@ -69,3 +69,5 @@ def collect_youla_links():
     print(f"Собрано {len(links)} ссылок.")
 
     driver.quit()
+
+collect_youla_links()

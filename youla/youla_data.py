@@ -43,7 +43,6 @@ def parse_youla_data():
         - Сохраняет данные в формате JSON с сохранением кириллических символов.
 
     Examples:
-        >>> parse_youla_data()
         Обработка: https://auto.ru/cars/used/sale/.../
         Обработка: https://auto.ru/cars/used/sale/.../
         Данные сохранены в json
@@ -97,7 +96,7 @@ def parse_youla_data():
                     return "Не указано"
 
             car_data = {
-                "title": get_text_by_css('h2[data-test-block="ProductCaption"]'),
+                "title": get_text_by_css('h1'),
                 "price": get_text_by_css('span.sc-fxhZON.fzJDlO'),
                 "year": get_text_by_xpath("//dt[contains(text(), 'Год выпуска')]/following-sibling::dd"),
                 "power": get_text_by_xpath("//dt[contains(text(), 'Мощность')]/following-sibling::dd"),
@@ -124,3 +123,5 @@ def parse_youla_data():
     print("Данные сохранены в youla_data.json")
 
     driver.quit()
+
+parse_youla_data()
