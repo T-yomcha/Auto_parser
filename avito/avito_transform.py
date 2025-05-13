@@ -65,8 +65,7 @@ def transform_avito_data():
         KeyError: Если в данных отсутствуют ожидаемые столбцы
 
     Examples:
-        >>> df = transform_avito_data()
-        >>> print(df.columns)
+
         Index(['brand', 'model', 'year', 'price', 'engine_volume', 'engine_type',
                'body_type', 'drive_type', 'transmission', 'mileage', 'location',
                'publication_date', 'description', 'link'],
@@ -80,7 +79,7 @@ def transform_avito_data():
     avito_df = avito_df.reset_index(drop=True)
     avito_df['year'] = avito_df['year'].astype(int)
     avito_df['mileage'] = avito_df['mileage'].astype(int)
-    avito_df['price'] = avito_df['price'].str.replace(' ', '').str.rstrip('₽').astype(int)
+    avito_df['price'] = avito_df['price'].astype(int)
     avito_df['transmission'] = avito_df['transmission'].apply(transform_transmission).apply(pd.Series)
     avito_df['body_type'] = avito_df['body_type'].str.split().str[0]
     avito_df = avito_df.drop(columns=['publication_date', 'title'])

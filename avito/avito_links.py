@@ -31,7 +31,6 @@ def collect_avito_links():
         - Включает задержки для имитации человеческого поведения.
 
     Examples:
-        >>> collect_avito_links()
         Обработка страницы 1...
         Страница 1: Найдено объявлений: 25
         Обработка страницы 2...
@@ -84,3 +83,5 @@ def collect_avito_links():
     print("Ссылки сохранены в avito_links.json")
 
     driver.quit()
+
+collect_avito_links()

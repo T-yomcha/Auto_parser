@@ -44,7 +44,6 @@ def parse_avito_data():
         - Сохраняет данные в формате JSON с сохранением кириллических символов.
 
     Examples:
-        >>> parse_avito_data()
         Обработка: https://auto.ru/cars/used/sale/.../
         Обработка: https://auto.ru/cars/used/sale/.../
         Данные сохранены в json
@@ -90,10 +89,16 @@ def parse_avito_data():
                 ).text.strip()
 
                 try:
-                    price = driver.find_element(By.XPATH,
-                                                "/html/body/div[1]/div/div[3]/div[1]/div/div[2]/div[3]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/div/div[1]/div/span/span/span[1]").text.strip()
-                except:
-                    price = "Не указано"
+                    price = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.XPATH, "//span[@itemprop='price']"))
+                    ).get_attribute("content").strip()
+                except Exception as e:
+                    try:
+                        price = WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.XPATH, "//span[@data-marker='item-view/item-price']"))
+                        ).text.strip().replace("\u2009", "").replace("\xa0", "")
+                    except Exception as e:
+                        price = "Не указано"
 
                 try:
                     description = driver.find_element(By.XPATH,
@@ -108,7 +113,7 @@ def parse_avito_data():
 
                 try:
                     location = driver.find_element(By.XPATH,
-                                                   "/html/body/div[1]/div/div[3]/div[1]/div/div[2]/div[3]/div/div[1]/div[2]/div[4]/div/div[1]/div[1]/div/span").text.strip()
+                                                   "/html/body/div[1]/div/div[4]/div[1]/div/div[2]/div[3]/div/div[1]/div/div[2]/div[4]/div/div[1]/div[1]/div/span").text.strip()
                 except:
                     location = "Не указано"
 
@@ -142,3 +147,5 @@ def parse_avito_data():
 
     print("Данные сохранены в avito_data.json")
     driver.quit()
+
+parse_avito_data()
